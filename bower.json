@@ -1,0 +1,17 @@
+{
+  "name": "scatterCharter",
+  "description": "Reuters scatter chart maker",
+  "main": [
+    "scss/scatterchartstyles.scss",
+    "dist/js/scatterCharter.js",
+    "jst/*.html",
+    "chartBlocks/*.md"    
+  ],
+  "dependencies": {
+    "charterCommons": "https://github.com/Matthew-Weber/charter-commons.git#*"
+  },   
+  "version": "0.0.1",
+   "ignore": [
+    "/.*"
+  ]
+}

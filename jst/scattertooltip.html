@@ -1,0 +1,7 @@
+<p class="tooltip-title"> <%= t.data.name +" " + t.data.category %></p>
+<p class="tooltip-text"><strong> <%= gettext('Passengers') %>:</strong> <%=t.self.noDecimal(t.data[t.self.yvalue])%> </p>
+<p class="tooltip-text"><strong> <%= gettext('Range') %>:</strong> <%= t.self.noDecimal(t.data[t.self.xvalue])%>  miles</p>
+<hr>
+
+<p class="tooltip-subhead"><%= gettext('On order') %></p>
+<p class="tooltip-text"><%= gettext('Number unavailable') %></p>
