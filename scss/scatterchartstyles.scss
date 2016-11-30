@@ -4,7 +4,7 @@
 	fill:$cyan3;
 //	fill:none !important;
 	&:hover{
-		fill:black !important;
+		fill:$body-color !important;
 	}
 }
 
@@ -24,8 +24,7 @@
         	margin-bottom: -1px;
         	opacity: .6;
         	&.scatter-size{
-        		//background-color: white;
-        		border: 1px black solid;
+        		border: 1px $body-color solid;
         	}
         }
         .scatter-legend-text{
