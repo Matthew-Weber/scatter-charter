@@ -15,8 +15,8 @@
 //				margin:{left:50, right:50, top:50, bottom:50},			
 //				xscaleorientation:"bottom",
 //				yscaleorientation:"left",
-//				legendTemplate:Reuters.Template.scatterlegend,
-//				tooltipTemplate: Reuters.Template.scattertooltip,
+//				legendTemplate:Reuters.Graphics.Template.scatterlegend,
+//				tooltipTemplate: Reuters.Graphics.Template.scattertooltip,
 //				dateParseFormat:"%m/%d/%y",
 //				xmin:"0",
 //				ymin:"0",
@@ -31,8 +31,8 @@
 //				multiDataLabels:["VALUE","PERCENT"],
 //				multiDataSlider:true,
 //				idField:"uniqueid",
-//				scatterSetupTemplate: Reuters.Template.scatterSetupTemplate,
-//				tooltipTemplate: Reuters.Template.scattertooltip,
+//				scatterSetupTemplate: Reuters.Graphics.Template.scatterSetupTemplate,
+//				tooltipTemplate: Reuters.Graphics.Template.scattertooltip,
 
 			});  		
 
