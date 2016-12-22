@@ -40,17 +40,27 @@
       __p += '\n    	<div class="scatter-nested-legend">\n            ';
       t.self.colorDomain.forEach(function (d, i) {
         ;
-        __p += '\n                <div class ="scatter-legend-item">\n                	<div class = "scatter-legend-circle circle" style="background-color:' + ((__t = t.self.colors[i]) == null ? '' : __t) + ';"></div>\n                	<p class = "scatter-legend-text">' + ((__t = d) == null ? '' : __t) + '</p>\n                </div>\n            ';
+        __p += '\n                <div class ="scatter-legend-item" data-id="' + ((__t = d) == null ? '' : __t) + '">\n                	<div class = "scatter-legend-circle circle" style="background-color:' + ((__t = t.self.colors[i]) == null ? '' : __t) + ';"></div>\n                	<p class = "scatter-legend-text">' + ((__t = d) == null ? '' : __t) + '</p>\n                </div>\n            ';
       });
       __p += '\n        	';
       if (t.self.rvalue) {
         ;
         __p += '\n                <br>\n                <div class ="scatter-legend-size">\n                    <div class = "scatter-legend-circle scatter-size circle order-legend"></div>\n                    <p class = "scatter-legend-text">' + ((__t = 'Size indicates Orders') == null ? '' : __t) + '</p>\n                 </div>\n        	';
       };
-      __p += '         \n    	</div>\n        <div class="scatter-nested-chart" id="' + ((__t = t.self.targetDiv) == null ? '' : __t) + '-chart"></div>\n    ';
+      __p += ' \n            ';
+      if (t.self.dropdown) {
+        ;
+        __p += '\n                <div class="mt-2 hidden-sm-down">\n                    <select class="custom-select scatter-select">\n                        <option selected>Show All ...   </option>\n                    </select>\n                    <small class="text-muted text-uppercase d-block">Choose to highlight</small>\n                </div>\n            ';
+      };
+      __p += '        	        \n    	</div>\n        <div class="scatter-nested-chart" id="' + ((__t = t.self.targetDiv) == null ? '' : __t) + '-chart"></div>\n    ';
     } else {
       ;
-      __p += '\n        <div class="" id="' + ((__t = t.self.targetDiv) == null ? '' : __t) + '-chart"></div>\n    ';
+      __p += '\n        ';
+      if (t.self.dropdown) {
+        ;
+        __p += '\n            <div class="mt-2 hidden-sm-down">\n                <select class="custom-select scatter-select">\n                    <option selected>Show All ...   </option>\n                </select>\n                <small class="text-muted text-uppercase d-block">Choose to highlight</small>\n            </div>\n        ';
+      };
+      __p += '         \n        <div class="" id="' + ((__t = t.self.targetDiv) == null ? '' : __t) + '-chart"></div>\n    ';
     };
     __p += '\n</div>\n\n\n\n\n';
     return __p;
@@ -97,6 +107,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 	xvalues: undefined,
 	yvalues: undefined,
 	height: undefined,
+	dropdown: undefined,
 	updateCount: 0,
 	dateParseFormat: "%m/%d/%y",
 	dateFormat: d3.time.format("%b %Y"),
@@ -325,6 +336,39 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 				self.slider.noUiSlider.set(currentIndex);
 			};
 		}
+
+		if (self.dropdown) {
+			self.selectArray = _.uniq(_.pluck(self.chartData, self.dropdown)).sort();
+			d3.select("#" + self.targetDiv + " .custom-select").selectAll("options").data(self.selectArray).enter().append("option").attr("value", function (d) {
+				return d;
+			}).html(function (d) {
+				return d;
+			});
+
+			self.$(".custom-select").on("change", function (evt) {
+				var id = $(this).val();
+				self.scatterPlot.classed("turned-off", function (d) {
+					if (id == "Show All ...") {
+						return false;
+					}
+					if (id == d[self.dropdown]) {
+						return false;
+					}
+					return true;
+				});
+			});
+		}
+		if (self.colorDomain && self.colorDomain.length > 1) {
+			self.$(".scatter-legend-item").on("click", function (d) {
+				var id = $(this).attr("data-id");
+				$(this).toggleClass("turned-off");
+				self.scatterPlot.each(function (d) {
+					if (id == d[self.colorvalue]) {
+						$(this).toggleClass("turned-off");
+					}
+				});
+			});
+		}
 	},
 
 	baseRender: function baseRender() {
@@ -505,10 +549,22 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			self.x = d3.time.scale().domain([self.getxmin(), self.getxmax()]).range([0, self.width]);
 		}
 
+		if (self.xvalue == "category") {
+			self.x = d3.scale.ordinal().domain(self.chartData.map(function (d) {
+				return d.category;
+			})).rangeRoundBands([0, self.width], 1);
+		}
+
 		self.y = d3.scale.linear().domain([self.getymin(), self.getymax()]).range([self.height, 0]).nice(self.yticks);
 
 		if (self.yvalue == "date") {
 			self.y = d3.time.scale().domain([self.getymin(), self.getymax()]).range([self.height, 0]);
+		}
+
+		if (self.yvalue == "category") {
+			self.y = d3.scale.ordinal().domain(self.chartData.map(function (d) {
+				return d.category;
+			})).rangeRoundBands([self.height, 0], 1);
 		}
 	},
 	resizeAxis: function resizeAxis() {
@@ -527,9 +583,14 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 		}
 
 		self.xAxis.ticks(self.xticks);
-		self.x.nice(self.xticks);
+		if (self.xvalue != "category") {
+			self.x.nice(self.xticks);
+		}
+
 		self.yAxis.ticks(self.yticks);
-		self.y.nice(self.yticks);
+		if (self.yvalue != "category") {
+			self.y.nice(self.yticks);
+		}
 	},
 
 	adjustXTicks: function adjustXTicks() {
@@ -542,9 +603,13 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 
 		if (ticksWidth > self.width) {
 			self.xAxis.ticks(4);
-			self.x.nice(4);
+			if (self.xvalue != "category") {
+				self.x.nice(self.xticks);
+			}
 			self.yAxis.ticks(4);
-			self.y.nice(4);
+			if (self.yvalue != "category") {
+				self.y.nice(self.yticks);
+			}
 		}
 
 		self.svg.select(".x.axis").transition().duration(500).call(self.xAxis);
@@ -560,6 +625,18 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 		self.x.range([0, self.width]).domain([self.getxmin(), self.getxmax()]);
 
 		self.y.domain([self.getymin(), self.getymax()]).range([self.height, 0]);
+
+		if (self.xvalue == "category") {
+			self.x.domain(self.chartData.map(function (d) {
+				return d.category;
+			})).rangeRoundBands([0, self.width], 1);
+		}
+
+		if (self.yvalue == "category") {
+			self.y.domain(self.chartData.map(function (d) {
+				return d.category;
+			})).rangeRoundBands([self.height, 0], 1);
+		}
 
 		d3.select("#" + self.chartDiv).select("svg").transition().duration(500).attr("width", self.width + self.margin.left + self.margin.right).attr("height", self.height + self.margin.top + self.margin.bottom);
 
@@ -606,6 +683,10 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			return self.setStroke(d);
 		});
 
+		self.scatterPlot.data(self.chartData, function (d) {
+			return d[self.idField];
+		}).exit().transition().duration(500).attr("r", 0);
+
 		if (self.xLabelText) {
 			self.xLabel.transition().duration(500).attr("x", self.width / 2).attr("y", self.height + 40);
 		}
@@ -633,13 +714,13 @@ Reuters.Graphics.ScatterModel = Backbone.Model.extend({
 
 		if (self.xvalue == "date") {
 			d[self.xvalue] = self.parseDate(d[self.xvalue]);
-		} else {
+		} else if (self.xvalue != "category") {
 			d[self.xvalue] = parseFloat(d[self.xvalue]);
 		}
 
 		if (self.yvalue == "date") {
 			d[self.yvalue] = self.parseDate(d[self.yvalue]);
-		} else {
+		} else if (self.yvalue != "category") {
 			d[self.yvalue] = parseFloat(d[self.yvalue]);
 		}
 

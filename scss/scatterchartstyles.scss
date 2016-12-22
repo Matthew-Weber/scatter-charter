@@ -6,7 +6,12 @@
 	&:hover{
 		fill:$body-color !important;
 	}
+	&.turned-off{
+    	opacity:0.04;
+	}
 }
+
+
 
 .chart-holder{
     position:relative;
@@ -16,6 +21,12 @@
         top:10px;
         position:absolute;
         
+        .scatter-legend-item{
+            cursor:pointer;
+            &.turned-off{
+                opacity:0.6;                
+            }
+        }
         .scatter-legend-circle{
         	width: 12px;
         	height: 12px;

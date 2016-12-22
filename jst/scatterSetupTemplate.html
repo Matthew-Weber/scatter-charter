@@ -39,7 +39,7 @@
     <%if(t.self.colorDomain && t.self.colorDomain.length > 1){%>
     	<div class="scatter-nested-legend">
             <%t.self.colorDomain.forEach(function(d,i){%>
-                <div class ="scatter-legend-item">
+                <div class ="scatter-legend-item" data-id="<%=d%>">
                 	<div class = "scatter-legend-circle circle" style="background-color:<%=t.self.colors[i]%>;"></div>
                 	<p class = "scatter-legend-text"><%=d%></p>
                 </div>
@@ -50,10 +50,26 @@
                     <div class = "scatter-legend-circle scatter-size circle order-legend"></div>
                     <p class = "scatter-legend-text"><%= gettext('Size indicates Orders') %></p>
                  </div>
-        	<%}%>         
+        	<%}%> 
+            <%if (t.self.dropdown){%>
+                <div class="mt-2 hidden-sm-down">
+                    <select class="custom-select scatter-select">
+                        <option selected>Show All ...   </option>
+                    </select>
+                    <small class="text-muted text-uppercase d-block">Choose to highlight</small>
+                </div>
+            <%}%>        	        
     	</div>
         <div class="scatter-nested-chart" id="<%=t.self.targetDiv%>-chart"></div>
     <%}else{%>
+        <%if (t.self.dropdown){%>
+            <div class="mt-2 hidden-sm-down">
+                <select class="custom-select scatter-select">
+                    <option selected>Show All ...   </option>
+                </select>
+                <small class="text-muted text-uppercase d-block">Choose to highlight</small>
+            </div>
+        <%}%>         
         <div class="" id="<%=t.self.targetDiv%>-chart"></div>
     <%}%>
 </div>

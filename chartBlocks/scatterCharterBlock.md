@@ -3,10 +3,10 @@
 				dataURL:"data/jetliner.csv",
 //              dataURL: '//d3sl9l9bcxfb5q.cloudfront.net/json/mw-disney-earns',
 				xvalue:"capacity",
-				yvalue:"range",	
-				colorvalue:"name",
+				yvalue:"category",	
+				colorvalue:"category",
 				colors: [red6, blue4, "#666", purple4, yellow4, green3],
-//				colorDomain:["Boeing","Airbus","Bombardier","Comac","Embraer","Mitsubishi"],  //can define colors explicitly
+				colorDomain:["Boeing","Airbus","Bombardier","Comac","Embraer","Mitsubishi"],  //can define colors explicitly
 				rvalue:"orders",				
 				radiusModifier:1.5, // a multiplier for sized radius's
 //				hardRadius:15, 
@@ -16,8 +16,6 @@
 //				margin:{left:50, right:50, top:50, bottom:50},			
 //				xscaleorientation:"bottom",
 //				yscaleorientation:"left",
-//				legendTemplate:Reuters.Graphics.Template.scatterlegend,
-//				tooltipTemplate: Reuters.Graphics.Template.scattertooltip,
 //				dateParseFormat:"%m/%d/%y",
 //				xmin:"0",
 //				ymin:"0",
@@ -31,7 +29,8 @@
 //				multiDataColumns:["gpd","unemployment"],
 //				multiDataLabels:["VALUE","PERCENT"],
 //				multiDataSlider:true,
-//				idField:"uniqueid",
+//				idField:"category",
+                dropdown:"name", //enter a column name 
 //				scatterSetupTemplate: Reuters.Graphics.Template.scatterSetupTemplate,
 //				tooltipTemplate: Reuters.Graphics.Template.scattertooltip,
 
