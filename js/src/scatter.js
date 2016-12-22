@@ -271,7 +271,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 		
 	baseRender: function() { 
 		var self = this;
-
+        self.trigger("renderChart:start")
 
 		$(self.el).html(function(){
 			return self.scatterSetupTemplate({data:self.chartData, self:self});
@@ -411,6 +411,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			self.update();
 		},100));
 
+        self.trigger("renderChart:end")
 		self.update()
 
 	},
@@ -541,6 +542,8 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 	
 	update: function(){
 		var self = this;
+        
+        self.trigger("update:start")
 
 		self.setWidthAndMargins()		
 
@@ -636,6 +639,8 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 					.duration(500)
 					.attr("x", self.height/2)
 					.attr("y",self.margin.left-20)		}			
+
+        self.trigger("update:end")
 
 	},
 

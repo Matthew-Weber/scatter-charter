@@ -1,6 +1,7 @@
  			Reuters.Graphics.scattergraphic = new Reuters.Graphics.ScatterPlot({
-				el: "#reuters-scatterchart",
+				el: "#reutersGraphic-chart1",
 				dataURL:"data/jetliner.csv",
+//              dataURL: '//d3sl9l9bcxfb5q.cloudfront.net/json/mw-disney-earns',
 				xvalue:"capacity",
 				yvalue:"range",	
 				colorvalue:"name",
@@ -36,3 +37,20 @@
 
 			});  		
 
+
+Reuters.Graphics.scattergraphic.on("renderChart:start", function(evt){
+    var self = this;
+    
+})		
+Reuters.Graphics.scattergraphic.on("renderChart:end", function(evt){
+    var self = this;
+    
+})		
+Reuters.Graphics.scattergraphic.on("update:start", function(evt){
+    var self = this;
+    
+})		
+Reuters.Graphics.scattergraphic.on("update:end", function(evt){
+    var self = this;
+    
+})	
