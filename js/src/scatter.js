@@ -202,10 +202,10 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
         self.slider = self.$('[data-slider]')[0]
                         
         noUiSlider.create(self.slider, {
-            start: [self.multiDataLabels.length-1],
+            start: [self.multiDataColumns.length-1],
             range: {
                 min: [0],
-                max: [self.multiDataLabels.length-1]
+                max: [self.multiDataColumns.length-1]
             },
             snap: false,
             step: 1,
@@ -219,7 +219,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			},                
             pips: {
                 mode: "count",
-                values: self.multiDataLabels.length,
+                values: self.multiDataColumns.length,
                 density: 3
             }
         });

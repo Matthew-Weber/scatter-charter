@@ -26,9 +26,9 @@
 //				xLabelText:"This is the x label",
 //				yLabelText:"This is the y label",
 //				dateFormat:d3.time.format("%b %Y"),
-//				multiDataColumns:["gpd","unemployment"],
-//				multiDataLabels:["VALUE","PERCENT"],
-//				multiDataSlider:true,
+				multiDataColumns:["1990","2010"],
+				multiDataLabels:["VALUE","PERCENT"],
+				multiDataSlider:true,
 //				idField:"category",
                 dropdown:"name", //enter a column name 
 //				scatterSetupTemplate: Reuters.Graphics.Template.scatterSetupTemplate,

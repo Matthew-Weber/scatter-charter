@@ -20,7 +20,7 @@
         __p += '		\n            		<div class="navContainer">\n                        <div class="btn-group nav-options horizontal" data-toggle="buttons">\n                            ';
         t.self.multiDataLabels.forEach(function (d, i) {
           ;
-          __p += '\n                                <label dataid="' + ((__t = d) == null ? '' : __t) + '" class="btn btn-primary ';
+          __p += '\n                                <label dataid="' + ((__t = t.self.multiDataColumns[i]) == null ? '' : __t) + '" class="btn btn-primary ';
           if (i == t.self.multiDataLabels.length - 1) {
             ;
             __p += 'active';
@@ -284,10 +284,10 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			self.slider = self.$('[data-slider]')[0];
 
 			noUiSlider.create(self.slider, {
-				start: [self.multiDataLabels.length - 1],
+				start: [self.multiDataColumns.length - 1],
 				range: {
 					min: [0],
-					max: [self.multiDataLabels.length - 1]
+					max: [self.multiDataColumns.length - 1]
 				},
 				snap: false,
 				step: 1,
@@ -301,7 +301,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 				},
 				pips: {
 					mode: "count",
-					values: self.multiDataLabels.length,
+					values: self.multiDataColumns.length,
 					density: 3
 				}
 			});

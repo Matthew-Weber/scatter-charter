@@ -4,7 +4,7 @@
             		<div class="navContainer">
                         <div class="btn-group nav-options horizontal" data-toggle="buttons">
                             <%t.self.multiDataLabels.forEach(function(d,i){%>
-                                <label dataid="<%= d %>" class="btn btn-primary <%if(i==t.self.multiDataLabels.length-1){%>active<%}%> smaller">
+                                <label dataid="<%= t.self.multiDataColumns[i] %>" class="btn btn-primary <%if(i==t.self.multiDataLabels.length-1){%>active<%}%> smaller">
                                     <input type="radio" name="nav-options" autocomplete="off"> 
                                     <%=d%>
                                 </label>
