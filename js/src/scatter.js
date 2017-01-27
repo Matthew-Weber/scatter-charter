@@ -662,7 +662,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 
 		self.scatterPlot
 			.data(self.chartData, function(d){return d[self.idField]})
-			.attr("title", function(d){
+			.attr("data-original-title", function(d){
 				return self.tooltipTemplate({data:d,self:self});
 			})
 			.transition()
