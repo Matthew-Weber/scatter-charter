@@ -268,6 +268,32 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			
 		}
 
+
+	},
+		
+	baseRender: function() { 
+		var self = this;
+        self.trigger("renderChart:start")
+
+		$(self.el).html(function(){
+			return self.scatterSetupTemplate({data:self.chartData, self:self});
+		})
+
+		self.width = self.$("#"+self.chartDiv).width() - self.margin.left - self.margin.right;
+
+		if (!self.options.height){
+			self.height = self.width;			
+		}
+		if (self.options.height < 10){
+			self.height = self.width * self.options.height
+		}
+		
+		self.setScales();
+				
+		if (self.dataType){
+			self.multiDataMaker();
+		}
+		
 		if (self.dropdown){
             self.selectArray = _.uniq(_.pluck(self.chartData, self.dropdown)).sort()
             d3.select("#"+self.targetDiv+" .custom-select").selectAll("options")
@@ -297,30 +323,8 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
         		})
     		})
 		}
-	},
 		
-	baseRender: function() { 
-		var self = this;
-        self.trigger("renderChart:start")
-
-		$(self.el).html(function(){
-			return self.scatterSetupTemplate({data:self.chartData, self:self});
-		})
-
-		self.width = self.$("#"+self.chartDiv).width() - self.margin.left - self.margin.right;
-
-		if (!self.options.height){
-			self.height = self.width;			
-		}
-		if (self.options.height < 10){
-			self.height = self.width * self.options.height
-		}
-		
-		self.setScales();
 				
-		if (self.dataType){
-			self.multiDataMaker();
-		}
 		self.svg = d3.select("#"+self.chartDiv)
 			.append("svg")
 			.attr("width", self.width + self.margin.left + self.margin.right)
