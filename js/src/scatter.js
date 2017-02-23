@@ -518,12 +518,18 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 				.range([0,self.width]);
 		}
 
+
+
 		if (self.xvalue == "category"){
-			self.x = d3.scale.ordinal()
-	            .domain(self.chartData.map(function(d) { return d.category;}))
-				.rangeRoundBands([0, self.width], 1)
-		}
-			
+            self.x = d3.scale.ordinal()            
+                .rangeRoundBands([0, self.width], 1)
+            if (self.categorySort){
+                self.x.domain(self.categorySort)
+            }else{
+                self.x.domain(self.chartData.map(function(d) { return d.category;}))
+            }
+        }
+        
 		self.y = d3.scale.linear()
 			.domain([self.getymin(),self.getymax()])			
 			.range([self.height, 0])
@@ -535,11 +541,15 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 				.range([self.height, 0]);
 		}
 
-		if (self.yvalue == "category"){
-			self.y = d3.scale.ordinal()
-	            .domain(self.chartData.map(function(d) { return d.category;}))
-				.rangeRoundBands([self.height,0], 1)
-		}
+		if (self.yvalue == "category"){            
+            self.y = d3.scale.ordinal()                
+                .rangeRoundBands([self.height,0], 1)
+            if (self.categorySort){
+                self.y.domain(self.categorySort)
+            }else{
+                self.y.domain(self.chartData.map(function(d) { return d.category;}))
+            }                
+        }
 
 	},
 	resizeAxis:function(){
