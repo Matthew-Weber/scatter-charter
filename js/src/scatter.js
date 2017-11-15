@@ -777,6 +777,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 					if (self.annotationData[0].data.date){
 						return self.x(self.parseDate(d.date))						
 					}
+					console.log(d.xvalue, self.x(d.xvalue))
 					return self.x(d.xvalue)
 
 				},

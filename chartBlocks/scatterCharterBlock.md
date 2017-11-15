@@ -40,6 +40,7 @@
 
 /*
 	annotationDebug:true,
+
 	annotations:function(self){
 		if (!self){self = this};
 		return [
