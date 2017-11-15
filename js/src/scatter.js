@@ -30,6 +30,7 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 	updateCount:0,
 	dateParseFormat:"%m/%d/%y",
 	dateFormat:d3.time.format("%b %Y"),
+	annotationType:d3.annotationLabel,	
 	
 	initialize: function(opts){
 		var self = this;
@@ -445,6 +446,10 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 			self.update();
 		},100));
 
+		if (self.annotations){
+			self.labelAdder();
+		}
+
         self.trigger("renderChart:end")
 		self.update()
 
@@ -735,9 +740,70 @@ Reuters.Graphics.ScatterPlot = Backbone.View.extend({
 					.attr("x", self.height/2)
 					.attr("y",self.margin.left-20)		}			
 
+		self.labelUpdate()
+
         self.trigger("update:end")
 
 	},
+
+	labelUpdate:function(){
+		var self = this;
+		if (!self.annotationGroup){return;}
+		self.annotationData = self.options.annotations(self)
+
+		self.makeAnnotations
+			.annotations(self.annotationData)				
+		
+		self.makeAnnotations.updatedAccessors()			
+		self.svg.select("g.annotation-group")
+			//.transition()
+			.call(self.makeAnnotations)			
+	},
+
+	labelAdder:function (){
+		var self = this;
+		self.annotationData = self.annotations()
+
+		self.makeAnnotations = d3.annotation()
+		  .editMode(self.annotationDebug)
+		  .type(self.annotationType)
+		  .annotations(self.annotationData)		  
+
+		  if (self.annotationData[0].data){
+			  
+		  	self.makeAnnotations
+			  .accessors({
+				x:function(d){
+					if (self.annotationData[0].data.date){
+						return self.x(self.parseDate(d.date))						
+					}
+					return self.x(d.xvalue)
+
+				},
+			    y: d => self.y(d.yvalue)
+			  })
+			  .accessorsInverse({
+			     date:function(d){
+					return self.dateFormat(self.x.invert(d.x))						
+				},
+				xvalue:function(d){
+					return self.x.invert(d.x)					
+				},
+			    yvalue: d => self.y.invert(d.y)
+			  })
+
+
+		  }
+
+		
+		self.annotationGroup = self.svg
+		  .append("g")
+		  .attr("class", "annotation-group")
+		  .call(self.makeAnnotations)	
+		  
+		 self.svg.select(".annotation-group").classed("active",true)	
+	}
+	
 
 //end of view
 });

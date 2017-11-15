@@ -37,6 +37,68 @@
 			});  		
 
 
+
+/*
+	annotationDebug:true,
+	annotations:function(self){
+		if (!self){self = this};
+		return [
+			{
+	          note: {
+	            label: "30% high digital jobs",
+	            title: "Austin, TX",
+	            wrap: 0,
+	            padding:0
+	          },
+	          connector: {
+	            end: "dot",
+	            type: "curve", // this adds in teh curve
+	            points: 1 // number of points on the curve
+	          },
+	          data:{xvalue:50534,yvalue:30},
+	          dy: -65,
+	          dx: -70
+	        },
+	        {
+	          note: {
+	            label: "31% high digital jobs",
+	            title: "Washington, D.C.",
+	            wrap: 150,
+	            //dyOffset:-1.8,	            
+	            padding:0
+	          },
+	          connector: {
+	            end: "dot",
+	            type: "curve", // this adds in teh curve
+	            points: 1 // number of points on the curve
+	          },
+	          data:{xvalue:67908,yvalue:31},
+	          dy: -50,
+	          dx: -60
+	        },
+			{
+	          note: {
+	            label: "28% high digital jobs",
+	            title: "Seattle, WA",
+	            wrap: 0,
+	            padding:0,
+	            dyOffset:1.8,	            
+	            dx: '30px'
+	          },
+	          connector: {
+	            end: "dot",
+	            type: "curve", // this adds in teh curve
+	            points: 1 // number of points on the curve
+	          },
+	          data:{xvalue:60575,yvalue:28},
+	          dy: 80,
+	          dx: 70
+	        }
+		]
+	}
+*/
+
+
 Reuters.Graphics.scattergraphic.on("renderChart:start", function(evt){
     var self = this;
     
