@@ -1470,7 +1470,7 @@
           x: this.annotation["_x"],
           y: this.annotation["_y"]
         };
-        var x = this.accessorsInverse.date(xyObj);
+        var x = this.accessorsInverse.xvalue(xyObj);
         var y = formatnumb(this.accessorsInverse.yvalue(xyObj));
 
         if (this.annotation.connector) {
